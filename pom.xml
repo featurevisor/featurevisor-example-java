@@ -22,6 +22,7 @@
     <repositories>
         <repository>
             <id>github</id>
+            <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/featurevisor/featurevisor-java</url>
         </repository>
     </repositories>
@@ -30,7 +31,7 @@
         <dependency>
             <groupId>com.featurevisor</groupId>
             <artifactId>featurevisor-java</artifactId>
-            <version>0.0.3</version>
+            <version>0.0.6</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
