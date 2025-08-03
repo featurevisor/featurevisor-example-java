@@ -26,7 +26,7 @@ public class App {
             );
 
             // evaluate feature
-            boolean isFeatureEnabled = instance.isEnabled("my-feature");
+            boolean isFeatureEnabled = instance.isEnabled("my_feature");
             System.out.println("Feature is enabled: " + isFeatureEnabled);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
