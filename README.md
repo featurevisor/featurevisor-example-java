@@ -10,7 +10,7 @@ Clone the repository, and install the dependencies:
 
 ## Setup `settings.xml`
 
-Create a new file in this repository at `~/.m2/settings.xml` with the following content:
+Create a new file at `~/.m2/settings.xml` with the following content:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
