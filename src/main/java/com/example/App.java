@@ -1,7 +1,6 @@
 package com.example;
 
-import com.featurevisor.sdk.Instance;
-import com.featurevisor.types.DatafileContent;
+import com.featurevisor.sdk.Featurevisor;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -15,15 +14,8 @@ public class App {
             String jsonContent = fetchJsonFromUrl("https://featurevisor-example-cloudflare.pages.dev/production/featurevisor-tag-all.json");
             System.out.println("Fetched JSON content");
 
-            // Parse JSON string to DatafileContent
-            DatafileContent datafileContent = DatafileContent.fromJson(jsonContent);
-            System.out.println("Parsed DatafileContent successfully");
-
             // Create Featurevisor SDK instance with the datafile content
-            Instance instance = new Instance(
-                new Instance.InstanceOptions()
-                    .datafile(datafileContent)
-            );
+            Featurevisor instance = Featurevisor.createInstance(jsonContent);
 
             // evaluate feature
             boolean isFeatureEnabled = instance.isEnabled("my_feature");
