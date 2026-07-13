@@ -15,7 +15,8 @@ public class App {
             System.out.println("Fetched JSON content");
 
             // Create Featurevisor SDK instance with the datafile content
-            Featurevisor instance = Featurevisor.createInstance(jsonContent);
+            Featurevisor instance = Featurevisor.createFeaturevisor(
+                    new Featurevisor.FeaturevisorOptions().datafileString(jsonContent));
 
             // evaluate feature
             boolean isFeatureEnabled = instance.isEnabled("my_feature");
