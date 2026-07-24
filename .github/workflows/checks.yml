@@ -2,39 +2,50 @@ name: Checks
 
 on:
   push:
-    branches: ["**"]
+    branches:
+      - main
+  pull_request:
 
 permissions:
   contents: read
   packages: read
 
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci:
+  checks:
+    name: Java ${{ matrix.java-version }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        java-version:
+          - "11"
+          - "26"
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    strategy:
-      matrix:
-        java-version: [24]
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v7
 
-      - name: Set up JDK ${{ matrix.java-version }}
-        uses: actions/setup-java@v4
+      - name: Set up Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java-version }}
-          distribution: "temurin"
-          cache: "maven"
+          distribution: temurin
+          cache: maven
           server-id: github
           server-username: GITHUB_ACTOR
           server-password: GITHUB_TOKEN
 
-      - name: Build with Maven
-        run: mvn clean compile
+      - name: Build
+        run: mvn --batch-mode --no-transfer-progress clean package
 
-      - name: Run
-        run: mvn exec:java -Dexec.mainClass="com.example.App"
+      - name: Run application
+        run: mvn --batch-mode --no-transfer-progress exec:java -Dexec.mainClass=com.example.App
